@@ -352,6 +352,8 @@
                             </option>
                             <option value="dark-matter">Dark</option>
                             <option value="positron">Light</option>
+                            <option value="opentopomap">OpenTopoMap</option>
+                            <option value="osm">OpenStreetMap</option>
                             <option value="none-black">Solid Black</option>
                             <option value="none-white">Solid White</option>
                         </select>
@@ -429,6 +431,48 @@
                         return mapStyleBlack;
                     case "none-white":
                         return mapStyleWhite;
+                    case "opentopomap":
+                        return {
+                            version: 8,
+                            sources: {
+                                opentopomap: {
+                                    type: "raster",
+                                    tiles: ["https://tile.opentopomap.org/{z}/{x}/{y}.png"],
+                                    tileSize: 256,
+                                    attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+                                }
+                            },
+                            layers: [
+                                {
+                                    id: "opentopomap",
+                                    type: "raster",
+                                    source: "opentopomap",
+                                    minzoom: 0,
+                                    maxzoom: 17
+                                }
+                            ]
+                        };
+                    case "osm":
+                        return {
+                            version: 8,
+                            sources: {
+                                osm: {
+                                    type: "raster",
+                                    tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
+                                    tileSize: 256,
+                                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                }
+                            },
+                            layers: [
+                                {
+                                    id: "osm",
+                                    type: "raster",
+                                    source: "osm",
+                                    minzoom: 0,
+                                    maxzoom: 19
+                                }
+                            ]
+                        };
                     default:
                         return `https://basemaps.cartocdn.com/gl/${map}-gl-style/style.json`;
                 }
